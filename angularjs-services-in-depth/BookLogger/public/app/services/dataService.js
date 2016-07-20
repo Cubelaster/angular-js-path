@@ -40,8 +40,8 @@
                 var successful = true;
 
                 if (successful) {
-                    deferred.notify('Just getting started...');
-                    deferred.notify('Almost there...');
+                    deferred.notify('Starting to fetch books...');
+                    deferred.notify('Almost done fetching books...');
 
                     deferred.resolve(booksArray);
                 } else {
@@ -57,7 +57,7 @@
 
             logger.output('Fetching readers!');
 
-            return [
+            var readersArray = [
                 {
                     reader_id: 1,
                     name: 'Marie',
@@ -77,6 +77,19 @@
                     totalMinutesRead: 600
                 }
             ];
+
+            var deferred = $q.defer();
+
+            $timeout(function () {
+
+                deferred.notify('Starting to fetch readers...');
+                deferred.notify('Almost done fetching readers...');
+
+                deferred.resolve(readersArray);
+
+            }, 1500);
+
+            return deferred.promise;
         };
 
     };

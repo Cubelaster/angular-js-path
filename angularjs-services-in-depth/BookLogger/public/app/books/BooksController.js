@@ -8,17 +8,21 @@
 
         var vm = this;//viewModel
         vm.appName = books.appName;
+        
         dataService.getAllBooks().then(getBooksSuccess,
-            null, getBooksNotification)
-            .catch(errorCallback);
-        vm.allReaders = dataService.getAllReaders();
+            null, getTaskNotification)
+            .catch(errorCallback)
+            .finally(taskComplete('getAllBooks'));
+
+        dataService.getAllReaders()
+            .then(getReadersSuccess, null, getTaskNotification)
+            .catch(errorCallback)
+            .finally(taskComplete('getAllReaders'));
 
         vm.getBadge = badgeService.retrieveBadge;
 
-        logger.output('BooksController was created!');
 
         function getBooksSuccess(books) {
-            throw 'Intentional error!';
             vm.allBooks = books;
         }
 
@@ -26,12 +30,24 @@
             logger.output('GetAllBooks failed: ' + reason);
         }
 
-        function getBooksNotification(notification) {
+        function getTaskNotification(notification) {
             logger.output('Promise Notification: ' + notification);
         }
 
         function errorCallback(error) {
             logger.output('Error Message: ' + error);
+        }
+
+        function getAllBooksComplete() {
+            logger.output('dataService\'s GetAllBooks completed!');
+        }
+
+        function taskComplete(taskName) {
+            logger.output('dataService\'s ' + taskName + ' completed!');
+        }
+
+        function getReadersSuccess(readers) {
+            vm.allReaders = readers;
         }
     }
 } ());
