@@ -2,7 +2,7 @@
 
     var app = angular.module('app', []);
 
-    app.provider('books', function(constants) {
+    app.provider('books', ['constants', function(constants) {
 
         this.$get = function () {
             var version = constants.APP_VERSION;
@@ -24,7 +24,7 @@
             includeVersionInTitle = value;
         };
 
-    });
+    }]);
 
     // app.config(function($provide) {
     //     $provide.provider('books', function () {
@@ -41,10 +41,12 @@
     // });
     // the provider function is available on the angular.module so this has been transfered on provider
 
-    app.config(function (booksProvider, constants) {
+    app.config( ['booksProvider', 'constants', 'dataServiceProvider',
+            function (booksProvider, constants, dataServiceProvider) {
         booksProvider.setIncludeVersionInTitle(true);
         
         console.log('Title from constants service: ' + constants.APP_TITLE);
-    });
+        console.log(dataServiceProvider.$get);
+    }]);
 
 } ());
