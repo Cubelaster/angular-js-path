@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <!-- Styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-cookies.js"></script>
+    <script src="app/app.js"></script>
 </head>
+
 <body ng-app="app">
-<div class="container">
-    <div ng-view></div>
-</div>
-
-
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-cookies.js"></script>
-<script src="app/app.js"></script>
-<script src="app/books/BooksController.js"></script>
-<script src="app/services/dataService.js"></script>
-<script src="app/services/constantService.js"></script>
-<script src="app/services/badgeService.js"></script>
-
-<script src="app/books/AddBookController.js"></script>
-<script src="app/books/EditBookController.js"></script>
+    
+    <div class="container">
+        <div ng-view></div>
+    </div>
 
 </body>
+
 </html>
