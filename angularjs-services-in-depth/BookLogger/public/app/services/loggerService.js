@@ -7,7 +7,7 @@
     }
 
     LoggerBase.prototype.output = function (message) {
-        console.log('LoggerBase: ' + message);
+        console.log('Logger: ' + message);
     };
 
     function BookAppLogger() {

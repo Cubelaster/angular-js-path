@@ -12,7 +12,7 @@
 
             logger.output('Fetching books!');
 
-            return [
+            var booksArray = [
                 {
                     book_id: 1,
                     title: 'Harry Potter and the Deathly Hallows',
@@ -32,6 +32,25 @@
                     yearPublished: 1963
                 }
             ];
+
+            var deferred = $q.defer();
+
+            $timeout(function () {
+
+                var successful = true;
+
+                if (successful) {
+                    deferred.notify('Just getting started...');
+                    deferred.notify('Almost there...');
+
+                    deferred.resolve(booksArray);
+                } else {
+                    deferred.reject('Error retrieving books.');
+                }
+
+            }, 1000);
+
+            return deferred.promise;
         };
 
         function getAllReaders() {
