@@ -18,6 +18,8 @@
     <!-- Services -->
     <script src="app/services/dataService.js"></script>
     <script src="app/services/loggerService.js"></script>
+    <script src="app/services/constantService.js"></script>
+    <script src="app/services/badgeService.js"></script>
 </head>
 
 <body ng-app="app">
@@ -31,6 +33,16 @@
             <ul>
                 <li ng-repeat="book in books.allBooks">
                     {{book.title}} - {{book.author}}
+                </li>
+            </ul>
+        </div>
+
+        <h3>List of Readers</h3>
+
+        <div>
+            <ul>
+                <li ng-repeat="reader in books.allReaders">
+                    {{reader.name}} - {{books.getBadge(reader.totalMinutesRead)}}
                 </li>
             </ul>
         </div>
