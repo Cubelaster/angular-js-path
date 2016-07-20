@@ -2,25 +2,36 @@
 
     angular.module('app')
         .controller('BooksController',
-        ['books', 'dataService', 'logger', 'badgeService', BooksController]);
+        ['books', '$q', 'dataService', 'logger', 'badgeService', BooksController]);
 
-    function BooksController(books, dataService, logger, badgeService) {
+    function BooksController(books, $q, dataService, logger, badgeService) {
 
         var vm = this;//viewModel
         vm.appName = books.appName;
-        
-        dataService.getAllBooks().then(getBooksSuccess,
-            null, getTaskNotification)
-            .catch(errorCallback)
-            .finally(taskComplete('getAllBooks'));
-
-        dataService.getAllReaders()
-            .then(getReadersSuccess, null, getTaskNotification)
-            .catch(errorCallback)
-            .finally(taskComplete('getAllReaders'));
-
         vm.getBadge = badgeService.retrieveBadge;
 
+        // dataService.getAllBooks().then(getBooksSuccess,
+        //     null, getTaskNotification)
+        //     .catch(errorCallback)
+        //     .finally(taskComplete('getAllBooks'));
+
+        // dataService.getAllReaders()
+        //     .then(getReadersSuccess, null, getTaskNotification)
+        //     .catch(errorCallback)
+        //     .finally(taskComplete('getAllReaders'));
+
+        var booksPromise = dataService.getAllBooks();
+        var readersPromise = dataService.getAllReaders();
+
+        $q.all([booksPromise, readersPromise])
+            .then(getAllDataSuccess)
+            .catch(errorCallback)
+            ;
+
+        function getAllDataSuccess(dataArray) {
+            vm.allBooks = dataArray[0];
+            vm.allReaders = dataArray[1];
+        }
 
         function getBooksSuccess(books) {
             vm.allBooks = books;
