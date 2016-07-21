@@ -2,13 +2,20 @@
 
     angular.module('app')
         .controller('BooksController',
-        ['books', '$q', 'dataService', 'logger', 'badgeService', BooksController]);
+        [
+            'books', '$q', 'dataService', 'logger', 'badgeService', '$cookies',
+            '$cookieStore', '$log', BooksController
+        ]);
 
-    function BooksController(books, $q, dataService, logger, badgeService) {
+    function BooksController(
+        books, $q, dataService, logger, badgeService, $cookies, $cookieStore, $log
+    ) {
 
         var vm = this;//viewModel
         vm.appName = books.appName;
         vm.getBadge = badgeService.retrieveBadge;
+        vm.favoriteBook = $cookies.favoriteBook;
+        vm.lastEdited = $cookieStore.get('lastEdited');
 
         // dataService.getAllBooks().then(getBooksSuccess,
         //     null, getTaskNotification)
@@ -60,5 +67,11 @@
         function getReadersSuccess(readers) {
             vm.allReaders = readers;
         }
+
+        $log.log('logging with log');
+        $log.info('logging with info');
+        $log.warn('logging with warn');
+        $log.error('logging with error');
+        $log.debug('logging with debug');
     }
 } ());

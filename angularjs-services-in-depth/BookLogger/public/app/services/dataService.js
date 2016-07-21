@@ -35,18 +35,18 @@
 
             var deferred = $q.defer();
 
-            // $timeout(function () {
+            $timeout(function () {
 
-            // var successful = true;
+                var successful = true;
 
-            // if (successful) {
-            // deferred.notify('Starting to fetch books...');
-            // deferred.notify('Almost done fetching books...');
-            deferred.resolve(booksArray);
-            //     } else {
-            //         deferred.reject('Error retrieving books.');
-            //     }
-            // }, 1000);
+                if (successful) {
+                    // deferred.notify('Starting to fetch books...');
+                    // deferred.notify('Almost done fetching books...');
+                    deferred.resolve(booksArray);
+                } else {
+                    deferred.reject('Error retrieving books.');
+                }
+            }, 1000);
 
             return deferred.promise;
         };

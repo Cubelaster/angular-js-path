@@ -10,6 +10,7 @@
 </div>
 
 <a href="#/AddBook">Add new book</a>
+<a href="#/EditBook/{{books.lastEdited.book_id}}">Open Last Edited</a>
 
 <h3>List of Readers</h3>
 
@@ -19,4 +20,9 @@
             {{reader.name}} - {{books.getBadge(reader.totalMinutesRead)}}
         </li>
     </ul>
+</div>
+
+<h3>Current Favorite Book</h3>
+<div>
+    {{books.favoriteBook}}
 </div>
