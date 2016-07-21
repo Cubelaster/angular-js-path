@@ -68,10 +68,10 @@
             vm.allReaders = readers;
         }
 
-        $log.log('logging with log');
-        $log.info('logging with info');
-        $log.warn('logging with warn');
-        $log.error('logging with error');
-        $log.debug('logging with debug');
+        // $log.log('logging with log');
+        // $log.info('logging with info');
+        // $log.warn('logging with warn');
+        // $log.error('logging with error');
+        // $log.debug('logging with debug');
     }
 } ());

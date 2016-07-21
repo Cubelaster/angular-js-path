@@ -64,15 +64,15 @@
                 .when('/EditBook/:bookId', {
                     templateUrl: '/app/templates/editBook.html',
                     controller: 'EditBookController',
-                    controllerAs: 'bookEditor',
-                    resolve: {
-                        books: function (dataService) {
-                            // throw 'Intentional error!';
-                            return dataService.getAllBooks();
-                        }
+                    controllerAs: 'bookEditor'
+                    // resolve: {
+                    //     books: function (dataService) {
+                    //         // throw 'Intentional error!';
+                    //         return dataService.getAllBooks();
+                    //     }
                         // resolve is meant to halt the rendering of html untill the data is ready to be binded
                     }
-                })
+                )
                 .otherwise('/')
                 ;
 
