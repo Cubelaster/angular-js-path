@@ -63,7 +63,9 @@
                     templateUrl: '/app/templates/editBook.html',
                     controller: 'EditBookController',
                     controllerAs: 'bookEditor'
-                });
+                })
+                .otherwise('/')
+                ;
 
         }]);
 
