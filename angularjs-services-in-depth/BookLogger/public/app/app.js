@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'ngCookies']);
 
     app.provider('books', ['constants', function (constants) {
 
@@ -41,9 +41,11 @@
     // });
     // the provider function is available on the angular.module so this has been transfered on provider
 
-    app.config(['booksProvider',  '$routeProvider',
-        function (booksProvider,  $routeProvider) {
+    app.config(['booksProvider', '$routeProvider', '$logProvider',
+        function (booksProvider, $routeProvider, $logProvider) {
             booksProvider.setIncludeVersionInTitle(true);
+
+            $logProvider.debugEnabled(false);
 
             // console.log('Title from constants service: ' + constants.APP_TITLE);
             // console.log(dataServiceProvider.$get);
@@ -62,11 +64,33 @@
                 .when('/EditBook/:bookId', {
                     templateUrl: '/app/templates/editBook.html',
                     controller: 'EditBookController',
-                    controllerAs: 'bookEditor'
+                    controllerAs: 'bookEditor',
+                    resolve: {
+                        books: function (dataService) {
+                            // throw 'Intentional error!';
+                            return dataService.getAllBooks();
+                        }
+                        // resolve is meant to halt the rendering of html untill the data is ready to be binded
+                    }
                 })
                 .otherwise('/')
                 ;
 
         }]);
+
+    app.run(['$rootScope', function ($rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            console.log('Successfully changed routes!');
+        });
+
+        $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+            console.log('Error changing routes!');
+
+            console.log(event);
+            console.log(current);
+            console.log(previous);
+            console.log(rejection);
+        });
+    }]);
 
 } ());
