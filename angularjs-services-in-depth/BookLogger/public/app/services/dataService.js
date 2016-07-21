@@ -10,7 +10,7 @@
 
         function getAllBooks() {
 
-            logger.output('Fetching books!');
+            // logger.output('Fetching books!');
 
             var booksArray = [
                 {
@@ -35,27 +35,25 @@
 
             var deferred = $q.defer();
 
-            $timeout(function () {
+            // $timeout(function () {
 
-                var successful = true;
+            // var successful = true;
 
-                if (successful) {
-                    deferred.notify('Starting to fetch books...');
-                    deferred.notify('Almost done fetching books...');
-
-                    deferred.resolve(booksArray);
-                } else {
-                    deferred.reject('Error retrieving books.');
-                }
-
-            }, 1000);
+            // if (successful) {
+            // deferred.notify('Starting to fetch books...');
+            // deferred.notify('Almost done fetching books...');
+            deferred.resolve(booksArray);
+            //     } else {
+            //         deferred.reject('Error retrieving books.');
+            //     }
+            // }, 1000);
 
             return deferred.promise;
         };
 
         function getAllReaders() {
 
-            logger.output('Fetching readers!');
+            // logger.output('Fetching readers!');
 
             var readersArray = [
                 {
@@ -80,20 +78,17 @@
 
             var deferred = $q.defer();
 
-            $timeout(function () {
-
-                deferred.notify('Starting to fetch readers...');
-                deferred.notify('Almost done fetching readers...');
-
-                deferred.resolve(readersArray);
-
-            }, 1500);
+            // $timeout(function () {
+            // deferred.notify('Starting to fetch readers...');
+            // deferred.notify('Almost done fetching readers...');
+            deferred.resolve(readersArray);
+            // }, 1500);
 
             return deferred.promise;
         };
 
     };
 
-    dataService.$inject = ['logger'];
+    // dataService.$inject = ['logger']; // another way of injecting services
 
 } ());

@@ -1,0 +1,22 @@
+<h3>List of Books</h3>
+
+<div>
+    <ul>
+        <li ng-repeat="book in books.allBooks">
+            {{book.title}} - {{book.author}} &nbsp
+            <a href="#/EditBook/{{book.book_id}}">Edit Book</a>
+        </li>
+    </ul>
+</div>
+
+<a href="#/AddBook">Add new book</a>
+
+<h3>List of Readers</h3>
+
+<div>
+    <ul>
+        <li ng-repeat="reader in books.allReaders">
+            {{reader.name}} - {{books.getBadge(reader.totalMinutesRead)}}
+        </li>
+    </ul>
+</div>

@@ -1,8 +1,8 @@
 (function () {
 
-    var app = angular.module('app', []);
+    var app = angular.module('app', ['ngRoute']);
 
-    app.provider('books', ['constants', function(constants) {
+    app.provider('books', ['constants', function (constants) {
 
         this.$get = function () {
             var version = constants.APP_VERSION;
@@ -41,12 +41,30 @@
     // });
     // the provider function is available on the angular.module so this has been transfered on provider
 
-    app.config( ['booksProvider', 'constants', 'dataServiceProvider',
-            function (booksProvider, constants, dataServiceProvider) {
-        booksProvider.setIncludeVersionInTitle(true);
-        
-        console.log('Title from constants service: ' + constants.APP_TITLE);
-        console.log(dataServiceProvider.$get);
-    }]);
+    app.config(['booksProvider',  '$routeProvider',
+        function (booksProvider,  $routeProvider) {
+            booksProvider.setIncludeVersionInTitle(true);
+
+            // console.log('Title from constants service: ' + constants.APP_TITLE);
+            // console.log(dataServiceProvider.$get);
+
+            $routeProvider
+                .when('/', {
+                    templateUrl: '/app/templates/books.html',
+                    controller: 'BooksController',
+                    controllerAs: 'books'
+                })
+                .when('/AddBook', {
+                    templateUrl: '/app/templates/addBook.html',
+                    controller: 'AddBookController',
+                    controllerAs: 'addBook'
+                })
+                .when('/EditBook/:bookId', {
+                    templateUrl: '/app/templates/editBook.html',
+                    controller: 'EditBookController',
+                    controllerAs: 'bookEditor'
+                });
+
+        }]);
 
 } ());
