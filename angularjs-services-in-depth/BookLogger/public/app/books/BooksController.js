@@ -4,20 +4,21 @@
         .controller('BooksController',
         [
             'books', '$q', 'dataService', 'logger', 'badgeService', '$cookies',
-            '$cookieStore', '$log', '$route', 'BooksResource', 
+            '$cookieStore', '$log', '$route', 'BooksResource', 'currentUser',
             BooksController
         ]);
 
     function BooksController(
         books, $q, dataService, logger, badgeService, $cookies, 
-        $cookieStore, $log, $route, BooksResource
+        $cookieStore, $log, $route, BooksResource, currentUser
     ) {
 
         var vm = this;//viewModel
         vm.appName = books.appName;
         vm.getBadge = badgeService.retrieveBadge;
         vm.favoriteBook = $cookies.favoriteBook;
-        vm.lastEdited = $cookieStore.get('lastEdited');
+        // vm.lastEdited = $cookieStore.get('lastEdited');
+        vm.lastEdited = currentUser.lastBookEdited;
 
         // dataService.getAllBooks().then(getBooksSuccess,
         //     null, getTaskNotification)
