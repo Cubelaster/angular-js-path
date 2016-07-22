@@ -40,5 +40,11 @@
         "title": "New Book",
         "author": "Me",
         "year_published": "2016"
+    },
+    {
+        "book_id": 63,
+        "title": "New Book Resource",
+        "author": "Me Again",
+        "year_published": "2016"
     }
 ]

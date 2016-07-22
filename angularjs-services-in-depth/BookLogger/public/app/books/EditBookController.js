@@ -4,13 +4,13 @@
         .controller('EditBookController',
         [
             '$routeParams', 'books', '$cookies', '$cookieStore', 'dataService',
-            '$log', '$location',
+            '$log', '$location', 'BooksResource',
             EditBookController
         ]);
 
     function EditBookController(
         $routeParams, books, $cookies, $cookieStore, dataService,
-        $log, $location
+        $log, $location, BooksResource
     ) {
         var vm = this;
         // console.log($routeParams.bookID);
@@ -19,16 +19,20 @@
         //     return item.book_id == $routeParams.bookId;
         // })[0];
 
-        dataService.getBookById($routeParams.bookId)
-            .then(getBookSuccess)
-            .catch(getBookError)
-            ;
+        // dataService.getBookById($routeParams.bookId)
+        //     .then(getBookSuccess)
+        //     .catch(getBookError)
+        //     ;
+
+        vm.currentBook = BooksResource.get({ book_id: $routeParams.bookId });
 
         vm.saveBook = function () {
-            dataService.updateBook(vm.currentBook)
-                .then(updateBookSuccess)
-                .catch(updateBookError)
-                ;
+            // dataService.updateBook(vm.currentBook)
+            //     .then(updateBookSuccess)
+            //     .catch(updateBookError)
+            //     ;
+            vm.currentBook.$update();
+            $location.path('/');
         };
 
         function getBookSuccess(book) {

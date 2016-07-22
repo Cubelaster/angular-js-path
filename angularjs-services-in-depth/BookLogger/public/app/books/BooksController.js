@@ -4,11 +4,13 @@
         .controller('BooksController',
         [
             'books', '$q', 'dataService', 'logger', 'badgeService', '$cookies',
-            '$cookieStore', '$log', '$route', BooksController
+            '$cookieStore', '$log', '$route', 'BooksResource', 
+            BooksController
         ]);
 
     function BooksController(
-        books, $q, dataService, logger, badgeService, $cookies, $cookieStore, $log, $route
+        books, $q, dataService, logger, badgeService, $cookies, 
+        $cookieStore, $log, $route, BooksResource
     ) {
 
         var vm = this;//viewModel
@@ -22,18 +24,20 @@
         //     .catch(errorCallback)
         //     .finally(taskComplete('getAllBooks'));
 
-        // dataService.getAllReaders()
-        //     .then(getReadersSuccess, null, getTaskNotification)
-        //     .catch(errorCallback)
-        //     .finally(taskComplete('getAllReaders'));
+        dataService.getAllReaders()
+            .then(getReadersSuccess, null, getTaskNotification)
+            .catch(errorCallback)
+            .finally(taskComplete('getAllReaders'));
 
         var booksPromise = dataService.getAllBooks();
         var readersPromise = dataService.getAllReaders();
 
-        $q.all([booksPromise, readersPromise])
-            .then(getAllDataSuccess)
-            .catch(errorCallback)
-            ;
+        // $q.all([booksPromise, readersPromise])
+        //     .then(getAllDataSuccess)
+        //     .catch(errorCallback)
+        //     ;
+
+        vm.allBooks = BooksResource.query();
 
         vm.deleteBook = function (bookId) {
             dataService.deleteBook(bookId)

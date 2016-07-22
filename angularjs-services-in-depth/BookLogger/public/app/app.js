@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('app', ['ngRoute', 'ngCookies']);
+    var app = angular.module('app', ['ngRoute', 'ngCookies', 'ngResource']);
 
     app.provider('books', ['constants', function (constants) {
 
@@ -41,11 +41,13 @@
     // });
     // the provider function is available on the angular.module so this has been transfered on provider
 
-    app.config(['booksProvider', '$routeProvider', '$logProvider',
-        function (booksProvider, $routeProvider, $logProvider) {
+    app.config(['booksProvider', '$routeProvider', '$logProvider', '$httpProvider',
+        function (booksProvider, $routeProvider, $logProvider, $httpProvider) {
             booksProvider.setIncludeVersionInTitle(true);
 
             $logProvider.debugEnabled(false);
+
+            $httpProvider.interceptors.push('bookLoggerInterceptor');
 
             // console.log('Title from constants service: ' + constants.APP_TITLE);
             // console.log(dataServiceProvider.$get);
