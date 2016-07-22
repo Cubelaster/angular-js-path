@@ -24,13 +24,16 @@
         //     .catch(errorCallback)
         //     .finally(taskComplete('getAllBooks'));
 
+        var booksPromise = dataService.getAllBooks();
+        var readersPromise = dataService.getAllReaders();
+
+        dataService.getUserSummary()
+            .then(getUserSummarySuccess);
+
         dataService.getAllReaders()
             .then(getReadersSuccess, null, getTaskNotification)
             .catch(errorCallback)
             .finally(taskComplete('getAllReaders'));
-
-        var booksPromise = dataService.getAllBooks();
-        var readersPromise = dataService.getAllReaders();
 
         // $q.all([booksPromise, readersPromise])
         //     .then(getAllDataSuccess)
@@ -83,8 +86,14 @@
             $log.info(message);
             $route.reload();
         }
+
         function deleteBookError(errorMessage) {
             $log.error(errorMessage);
+        }
+
+        function getUserSummarySuccess(summaryData) {
+            console.log(summaryData);
+            vm.summaryData = summaryData;
         }
 
         // $log.log('logging with log');

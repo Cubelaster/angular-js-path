@@ -46,5 +46,11 @@
         "title": "New Book Resource",
         "author": "Me Again",
         "year_published": "2016"
+    },
+    {
+        "book_id": 64,
+        "title": "New Book Cache",
+        "author": "Me Again",
+        "year_published": "2000"
     }
 ]
