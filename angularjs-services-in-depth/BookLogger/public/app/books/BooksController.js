@@ -4,11 +4,11 @@
         .controller('BooksController',
         [
             'books', '$q', 'dataService', 'logger', 'badgeService', '$cookies',
-            '$cookieStore', '$log', BooksController
+            '$cookieStore', '$log', '$route', BooksController
         ]);
 
     function BooksController(
-        books, $q, dataService, logger, badgeService, $cookies, $cookieStore, $log
+        books, $q, dataService, logger, badgeService, $cookies, $cookieStore, $log, $route
     ) {
 
         var vm = this;//viewModel
@@ -34,6 +34,13 @@
             .then(getAllDataSuccess)
             .catch(errorCallback)
             ;
+
+        vm.deleteBook = function (bookId) {
+            dataService.deleteBook(bookId)
+                .then(deleteBookSuccess)
+                .catch(deleteBookError)
+                ;
+        }
 
         function getAllDataSuccess(dataArray) {
             vm.allBooks = dataArray[0];
@@ -66,6 +73,14 @@
 
         function getReadersSuccess(readers) {
             vm.allReaders = readers;
+        }
+
+        function deleteBookSuccess(message) {
+            $log.info(message);
+            $route.reload();
+        }
+        function deleteBookError(errorMessage) {
+            $log.error(errorMessage);
         }
 
         // $log.log('logging with log');

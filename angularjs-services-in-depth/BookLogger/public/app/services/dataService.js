@@ -9,7 +9,9 @@
             getAllBooks: getAllBooks,
             getAllReaders: getAllReaders,
             getBookById: getBookById,
-            updateBook: updateBook
+            updateBook: updateBook,
+            addBook: addBook,
+            deleteBook: deleteBook
         };
 
         function getAllBooks() {
@@ -45,6 +47,27 @@
                 .catch(updateBookError)
         }
 
+        function addBook(newBook) {
+            return $http({
+                method: 'POST',
+                url: 'api/books',
+                data: newBook
+            })
+                .then(addBookSuccess)
+                .catch(addBookError)
+                ;
+        }
+
+        function deleteBook(bookId) {
+            return $http({
+                method: 'DELETE',
+                url: 'api/books/' + bookId
+            })
+                .then(deleteBookSuccess)
+                .catch(deleteBookError)
+                ;
+        }
+
         function sendResponseData(response) {
             return response.data;
         }
@@ -59,6 +82,22 @@
 
         function updateBookError(response) {
             return $q.reject('Error updating book. HTTP status: ' + response.status);
+        }
+
+        function addBookSuccess(response) {
+            return 'Book added: ' + response.config.data.title;
+        }
+
+        function addBookError(response) {
+            $q.reject('Error adding the book. HTTP status: ' + response.status);
+        }
+
+        function deleteBookSuccess(response) {
+            return 'Book deleted!';
+        }
+
+        function deleteBookError(response) {
+            $q.reject('Error deleting the book. HTTP status: ' + response.status);
         }
 
         function getAllReaders() {

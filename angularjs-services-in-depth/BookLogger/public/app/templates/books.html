@@ -5,6 +5,9 @@
         <li ng-repeat="book in books.allBooks">
             {{book.title}} - {{book.author}} &nbsp
             <a href="#/EditBook/{{book.book_id}}">Edit Book</a>
+            <button type="menu" ng-click="books.deleteBook(book.book_id)">
+                Delete book
+            </button>
         </li>
     </ul>
 </div>
