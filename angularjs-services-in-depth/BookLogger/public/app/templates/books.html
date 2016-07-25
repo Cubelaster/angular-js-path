@@ -1,17 +1,28 @@
-<a href="#/AddBook">Add Book</a>
+<div>
+    Books: {{books.summaryData.bookCount}} <br />
+    Readers: {{books.summaryData.readerCount}} <br />
+    Total minutes read: {{books.summaryData.grandTotalMinutes}} <br /> 
+</div>
 
-<a href="#/EditBook/{{books.lastEdited.book_id}}">Open Last Edited</a>
+<h3>List of Books</h3>
 
-<h3>All Books</h3>
 <div>
     <ul>
         <li ng-repeat="book in books.allBooks">
-            {{book.title}}--{{book.author}}
-            <a href="#/EditBook/{{book.book_id}}">Edit</a>
+            {{book.title}} - {{book.author}} &nbsp
+            <a href="#/EditBook/{{book.book_id}}">Edit Book</a>
+            <button type="button" class="btn btn-default btn-xs" ng-click="books.deleteBook(book.book_id)">
+                Delete book
+            </button>
         </li>
     </ul>
 </div>
-<h3>All Readers</h3>
+
+<a href="#/AddBook">Add new book</a>
+<a href="#/EditBook/{{books.lastEdited.book_id}}">Open Last Edited</a>
+
+<h3>List of Readers</h3>
+
 <div>
     <ul>
         <li ng-repeat="reader in books.allReaders">

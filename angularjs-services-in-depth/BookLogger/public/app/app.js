@@ -1,73 +1,127 @@
 (function () {
 
-    var app=angular.module('app', ['ngRoute','ngCookies']);
-    app.config(function ($provide) {
+    var app = angular.module('app', ['ngRoute', 'ngCookies', 'ngResource']);
 
-        $provide.provider('books', ['constants',function (constants) {
-            var includeVersionInTitle=false;
-            this.setIncludeVersionInTitle=function(value){
-                includeVersionInTitle=value;
-            }
-            this.$get = function () {
-                var appName=constants.APP_TITLE;
-                var version=constants.APP_VERSION;
+    app.provider('books', ['constants', function (constants) {
 
-                if(includeVersionInTitle){
-                    appName+=' ' +version;
+        this.$get = function () {
+            var version = constants.APP_VERSION;
+            var appName = constants.APP_TITLE;
+            var appDesc = constants.APP_DESCRIPTION;
+
+            if (includeVersionInTitle) {
+                appName += ' ' + version;
+            };
+
+            return {
+                appName: appName,
+                appDesc: appDesc
+            };
+        };
+
+        var includeVersionInTitle = false;
+        this.setIncludeVersionInTitle = function (value) {
+            includeVersionInTitle = value;
+        };
+
+    }]);
+
+    // app.config(function($provide) {
+    //     $provide.provider('books', function () {
+    //         this.$get = function() {
+    //             var appName = 'Book Logger';
+    //             var appDesc = 'Track which books you read.';
+
+    //             return {
+    //                 appName: appName,
+    //                 appDesc: appDesc
+    //             };
+    //         };
+    //     });
+    // });
+    // the provider function is available on the angular.module so this has been transfered on provider
+
+    app.config([
+        'booksProvider', '$routeProvider', '$logProvider', '$httpProvider', '$provide',
+        function (booksProvider, $routeProvider, $logProvider, $httpProvider, $provide) {
+
+            $provide.decorator('$log', ['$delegate', 'books', logDecorator]);
+
+            booksProvider.setIncludeVersionInTitle(true);
+
+            $logProvider.debugEnabled(true);
+
+            $httpProvider.interceptors.push('bookLoggerInterceptor');
+
+            // console.log('Title from constants service: ' + constants.APP_TITLE);
+            // console.log(dataServiceProvider.$get);
+
+            $routeProvider
+                .when('/', {
+                    templateUrl: '/app/templates/books.html',
+                    controller: 'BooksController',
+                    controllerAs: 'books'
+                })
+                .when('/AddBook', {
+                    templateUrl: '/app/templates/addBook.html',
+                    controller: 'AddBookController',
+                    controllerAs: 'bookAdder'
+                })
+                .when('/EditBook/:bookId', {
+                    templateUrl: '/app/templates/editBook.html',
+                    controller: 'EditBookController',
+                    controllerAs: 'bookEditor'
+                    // resolve: {
+                    //     books: function (dataService) {
+                    //         // throw 'Intentional error!';
+                    //         return dataService.getAllBooks();
+                    //     }
+                    // resolve is meant to halt the rendering of html untill the data is ready to be binded
                 }
-            
-                var appDesc=constants.APP_DESC
-                return {
-                    appName: appName,
-                    appDesc:appDesc
-                };
-            }
+                )
+                .otherwise('/')
+                ;
+
         }]);
-        
-    });
 
-    app.config(['booksProvider','constants','$logProvider','dataServiceProvider',function(booksProvider,constants,$logProvider,dataServiceProvider){
-        booksProvider.setIncludeVersionInTitle(true);
-        console.log('title from constants service.'+constants.APP_TITLE);
+    function logDecorator($delegate, books) {
+        function log(message) {
+            message += ' - ' + new Date() + ' (' + books.appName + ')';
+            $delegate.log(message);
+        }
+        function info(message) {
+            $delegate.info(message);
+        }
+        function warn(message) {
+            $delegate.warn(message);
+        }
+        function error(message) {
+            $delegate.error(message);
+        }
+        function debug(message) {
+            $delegate.debug(message);
+        }
+        function awesome(message) {
+            message = 'Awesome!!! - ' + message;
+            $delegate.debug(message);
+        }
+        return {
+            log: log,
+            info: info,
+            warn: warn,
+            error: error,
+            debug: debug,
+            awesome: awesome
+        }
+    }
 
-        console.log(dataServiceProvider.$get);
-        //生产环境设置为false.
-        $logProvider.debugEnabled(false);
-    }]);
-
-    app.config(['$routeProvider',function($routeProvider){
-        $routeProvider
-            .when('/',{
-                templateUrl:"/app/templates/books.html",
-                controller:"BooksController",
-                controllerAs:'books'
-            })
-            .when('/AddBook',{
-                templateUrl:"/app/templates/addBook.html",
-                controller:"AddBookController",
-                controllerAs:'addBook'
-            })
-            .when('/EditBook/:bookId',{
-                templateUrl:"/app/templates/editBook.html",
-                controller:"EditBookController",
-                controllerAs:'bookEditor',
-                resolve:{
-                    books:function(dataService){
-                        return dataService.getAllBooks();
-                    }
-                }
-            })
-            .otherwise('/');
-
-    }]);
-
-    app.run(['$rootScope',function($rootScope){
-        $rootScope.$on('$routeChangeSuccess',function(event,current,previous){
-            console.log('successfully changed routes');
+    app.run(['$rootScope', function ($rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            console.log('Successfully changed routes!');
         });
 
-        $rootScope.$on('$routeChangeError',function(event,current,previous,rejection){
-            console.log('error changed routes');
+        $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+            console.log('Error changing routes!');
 
             console.log(event);
             console.log(current);
