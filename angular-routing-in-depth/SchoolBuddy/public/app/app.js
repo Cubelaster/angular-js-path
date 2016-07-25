@@ -49,37 +49,38 @@
                     }
                 }
             })
-            // .when('/classrooms/:id', {
-            //     templateUrl: '/app/templates/classroom.html',
-            //     controller: 'ClassroomController',
-            //     controllerAs: 'classroom'
-            // })
-            // .when('/classrooms/:id/detail/:month?', {
-            //     templateUrl: '/app/templates/classroomDetail.html',
-            //     controller: 'ClassroomController',
-            //     controllerAs: 'classroom'
-            // })
+            .when('/classrooms/:id', {
+                templateUrl: '/app/templates/classroom.html',
+                controller: 'ClassroomController',
+                controllerAs: 'classroom'
+            })
+            .when('/classrooms/:id/detail/:month?', {
+                // question mark on parameter in the link makes it optional
+                templateUrl: '/app/templates/classroomDetail.html',
+                controller: 'ClassroomController',
+                controllerAs: 'classroom'
+            })
             .otherwise('/');
 
     }]);
 
-    app.run(['$rootScope', '$log', function ($rootScope, $log) {
-        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            $log.debug('successfully changed routes');
+    // app.run(['$rootScope', '$log', function ($rootScope, $log) {
+    //     $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+    //         $log.debug('successfully changed routes');
 
-            $log.debug(event);
-            $log.debug(current);
-            $log.debug(previous);
-        });
+    //         $log.debug(event);
+    //         $log.debug(current);
+    //         $log.debug(previous);
+    //     });
 
-        $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
-            $log.debug('Unsuccessfully changed routes');
+    //     $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+    //         $log.debug('Unsuccessfully changed routes');
 
-            $log.debug(event);
-            $log.debug(current);
-            $log.debug(previous);
-            $log.debug(rejection);
-        });
-    }]);
+    //         $log.debug(event);
+    //         $log.debug(current);
+    //         $log.debug(previous);
+    //         $log.debug(rejection);
+    //     });
+    // }]);
 
 } ());
