@@ -6,8 +6,17 @@
 
         $logProvider.debugEnabled(true);
 
-        //$locationProvider.hashPrefix('!');
-        //$locationProvider.html5Mode(true);
+        // $locationProvider.hashPrefix('!');
+        /* flag: Html5Bang - this is used in Html5 mode for routing. If the ! is added, it's required to change the links as well, so that Angular knows what to look for.
+        LocationProvider allows for modifying the links so the look different.
+        Also, locationProvider has html5Mode which removes # alltogether. 
+        */
+        $locationProvider.html5Mode(true);
+        // {
+        //     enabled: true,
+        //     requiredBase: true,
+        //     rewriteLinks: true
+        // }); // true in first line means the same as commented object literall
 
         $routeProvider
             .when('/', {

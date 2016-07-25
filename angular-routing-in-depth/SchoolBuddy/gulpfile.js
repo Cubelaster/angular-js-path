@@ -5,7 +5,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-
+var rootPath = path.normalize(__dirname + '/public');
+// rootPath variable for saving root of application - used in html5Mode
 
 gulp.task('startServer', function (cb) {
 
@@ -30,6 +31,11 @@ gulp.task('startServer', function (cb) {
     app.use('/api/schools', schools);
     app.use('/api/classrooms', classrooms);
     app.use('/api/activities', activities);
+
+    app.get('*', function (req, res) { res.sendFile(rootPath + '/index.html'); });
+    // config for html5Mode which acts as otherwise when targeting non-existent route
+    // non-existent route is basically a url link that is not configured in ngRoute
+    // ngRoute is defined in app.js 
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
