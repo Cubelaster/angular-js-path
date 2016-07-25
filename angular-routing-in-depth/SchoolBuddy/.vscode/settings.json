@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "workbench.editor.enablePreview": true,
+    "editor.acceptSuggestionOnEnter": false,
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.wrappingColumn": 90,
+    "window.openFilesInNewWindow": true,
+    "terminal.integrated.fontFamily": "Consolas"
+}
