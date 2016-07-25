@@ -4,7 +4,7 @@
 
     app.config(['$logProvider', '$routeProvider', '$locationProvider', function ($logProvider, $routeProvider, $locationProvider) {
 
-        $logProvider.debugEnabled(false);
+        $logProvider.debugEnabled(true);
 
         //$locationProvider.hashPrefix('!');
         //$locationProvider.html5Mode(true);
@@ -32,11 +32,11 @@
                 //     console.log(currSearch);
                 //     return '/schools';
                 // },
-                resolve: {
-                    promise: function () {
-                        //throw "error transitioning to classrooms";
-                    }
-                }
+                // resolve: {
+                //     promise: function () {
+                //         throw "error transitioning to classrooms";
+                //     }
+                // }
             })
             .when('/activities', {
                 controller: 'AllActivitiesController',
@@ -63,25 +63,23 @@
 
     }]);
 
-    // app.run(['$rootScope','$log',function($rootScope,$log){
-    //     $rootScope.$on('$routeChangeSuccess',function(event,current,previous){
-    //         $log.debug('successfully changed routes');
+    app.run(['$rootScope', '$log', function ($rootScope, $log) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $log.debug('successfully changed routes');
 
-    //         $log.debug(event);
-    //         $log.debug(current);
-    //         $log.debug(previous);
-    //     });
+            $log.debug(event);
+            $log.debug(current);
+            $log.debug(previous);
+        });
 
-    //     $rootScope.$on('$routeChangeError',function(event,current,previous,rejection){
-    //         $log.debug('successfully changed routes');
+        $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
+            $log.debug('Unsuccessfully changed routes');
 
-    //         $log.debug(event);
-    //         $log.debug(current);
-    //         $log.debug(previous);
-    //         $log.debug(rejection);
-    //     });
-
-
-    // }]);
+            $log.debug(event);
+            $log.debug(current);
+            $log.debug(previous);
+            $log.debug(rejection);
+        });
+    }]);
 
 } ());
