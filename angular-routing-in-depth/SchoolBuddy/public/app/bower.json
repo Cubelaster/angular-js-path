@@ -1,5 +1,6 @@
 {
   "name": "SchoolBuddy",
+  "main": "app/app.js",
   "homepage": "https://github.com/Cubelaster/angular-js-path",
   "authors": [
     "Cubelaster <david.cubela@gmail.com>"
