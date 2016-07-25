@@ -2,9 +2,9 @@
 
     var app = angular.module('app', ['ngRoute']);
 
-    app.config(['$logProvider', '$routeProvider','$locationProvider', function ($logProvider, $routeProvider,$locationProvider) {
+    app.config(['$logProvider', '$routeProvider', '$locationProvider', function ($logProvider, $routeProvider, $locationProvider) {
 
-        $logProvider.debugEnabled(true);
+        $logProvider.debugEnabled(false);
 
         //$locationProvider.hashPrefix('!');
         //$locationProvider.html5Mode(true);
@@ -18,14 +18,22 @@
             .when('/schools', {
                 controller: 'AllSchoolsController',
                 controllerAs: 'schools',
-                templateUrl: '/app/templates/allSchools.html'
+                templateUrl: '/app/templates/allSchools.html',
             })
             .when('/classrooms', {
                 controller: 'AllClassroomsController',
                 controllerAs: 'classrooms',
                 templateUrl: '/app/templates/allClassrooms.html',
-                resolve:{
-                    promise:function(){
+                // caseInsensitiveMatch: true, // url is case sensitive by default
+                // redirectTo: '/schools',
+                // redirectTo: function (params, currPath, currSearch) {
+                //     console.log(params);
+                //     console.log(currPath);
+                //     console.log(currSearch);
+                //     return '/schools';
+                // },
+                resolve: {
+                    promise: function () {
                         //throw "error transitioning to classrooms";
                     }
                 }
@@ -34,45 +42,46 @@
                 controller: 'AllActivitiesController',
                 controllerAs: 'activities',
                 templateUrl: '/app/templates/allActivities.html',
+                caseInsensitiveMatch: true,
                 resolve: {
                     activities: function (dataService) {
                         return dataService.getAllActivities();
                     }
                 }
             })
-            .when('/classrooms/:id', {
-                templateUrl: '/app/templates/classroom.html',
-                controller: 'ClassroomController',
-                controllerAs: 'classroom'
-            })
-            .when('/classrooms/:id/detail/:month?', {
-                templateUrl: '/app/templates/classroomDetail.html',
-                controller: 'ClassroomController',
-                controllerAs: 'classroom'
-            })
+            // .when('/classrooms/:id', {
+            //     templateUrl: '/app/templates/classroom.html',
+            //     controller: 'ClassroomController',
+            //     controllerAs: 'classroom'
+            // })
+            // .when('/classrooms/:id/detail/:month?', {
+            //     templateUrl: '/app/templates/classroomDetail.html',
+            //     controller: 'ClassroomController',
+            //     controllerAs: 'classroom'
+            // })
             .otherwise('/');
 
     }]);
 
-    app.run(['$rootScope','$log',function($rootScope,$log){
-        $rootScope.$on('$routeChangeSuccess',function(event,current,previous){
-            $log.debug('successfully changed routes');
+    // app.run(['$rootScope','$log',function($rootScope,$log){
+    //     $rootScope.$on('$routeChangeSuccess',function(event,current,previous){
+    //         $log.debug('successfully changed routes');
 
-            $log.debug(event);
-            $log.debug(current);
-            $log.debug(previous);
-        });
+    //         $log.debug(event);
+    //         $log.debug(current);
+    //         $log.debug(previous);
+    //     });
 
-        $rootScope.$on('$routeChangeError',function(event,current,previous,rejection){
-            $log.debug('successfully changed routes');
-            
-            $log.debug(event);
-            $log.debug(current);
-            $log.debug(previous);
-            $log.debug(rejection);
-        });
+    //     $rootScope.$on('$routeChangeError',function(event,current,previous,rejection){
+    //         $log.debug('successfully changed routes');
+
+    //         $log.debug(event);
+    //         $log.debug(current);
+    //         $log.debug(previous);
+    //         $log.debug(rejection);
+    //     });
 
 
-    }]);
+    // }]);
 
 } ());
